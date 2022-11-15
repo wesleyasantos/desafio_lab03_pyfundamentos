@@ -16,8 +16,9 @@ class Hangman():
         self.word = word
         self.missed_letters = []
         self.guessed_letters = []
-        print("=========================== Hangman Game ===========================")
+        print("================== Hangman Game ==================")
         print(logo)
+        
 
     # Método para adivinhar a letra
     def guess(self, letter):
@@ -30,11 +31,11 @@ class Hangman():
         return True
             
     ## Método para verificar se o jogo terminou
-    def hangman_over(self):
-        return self.hangman_won() or (len(self.missed_letters) == 6)
+    def over(self):
+        return self.won() or (len(self.missed_letters) == 6)
         
     # Método para verificar se o jogador venceu
-    def hangman_won(self):
+    def won(self):
         if '_' not in self.hide_word():
             return True
         return False
@@ -50,17 +51,22 @@ class Hangman():
         return rt
         
     # Método para checar o status do game e imprimir o board na tela
-    def print_game_status(self):
+    def print_status(self):
         print(stages[len(self.missed_letters)])
         print('\nPalavra: '+ self.hide_word())
-        print('\nLetras erradas: ',)
+        print('\nLetras erradas: ')
         for letter in self.missed_letters:
-            print(letter,)
+            print(letter)
         print()
-        print('Letras corretas: ',)
+        print('Letras corretas: ')
         for letter in self.guessed_letters:
-            print(letter,)
+            print(letter)
         print()
+        print('CUIDADO!! Você tem apenas 6 tentativas: ')
+        attempt = 6
+        for letter in self.missed_letters:
+            attempt -= 1
+            print(f'{attempt} tentativas restantes.')
 
 # Função para ler uma palavra de forma aleatória do banco de palavras
 def rand_word():
@@ -74,17 +80,17 @@ def main():
     game = Hangman(rand_word())
 
     # Enquanto o jogo não tiver terminado - print do status, solicita uma letra e faz a leitura do caracter
-    while not game.hangman_over():
-        game.print_game_status()
+    while not game.over():
+        game.print_status()
         user_input = input('\nDigite uma letra: ')
         game.guess(user_input)
         os.system('cls')
     
     # Verifica o status do jogo
-    game.print_game_status()
+    game.print_status()
 
     # De acordo com o status, imprime mensagem na tela para o usuário
-    if game.hangman_won():
+    if game.won():
         print("Parabéns! Você venceu!!")
     else:
         print("\nGame over! Você perdeu.")
