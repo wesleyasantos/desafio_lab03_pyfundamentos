@@ -91,7 +91,7 @@ def main():
 
     # De acordo com o status, imprime mensagem na tela para o usuário
     if game.won():
-        print("Parabéns! Você venceu!!")
+        print("\nParabéns! Você venceu!!")
     else:
         print("\nGame over! Você perdeu.")
         print("A palavra era " + game.word)
